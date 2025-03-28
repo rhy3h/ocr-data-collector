@@ -43,7 +43,10 @@ class Ocr:
             if file_info.result == '':
                 if model == 'easyocr':
                     result = self.easyocr_reader.readtext(file_path, detail = 0)
-                    prediect_ans = result[0].lower()
+                    try:
+                        prediect_ans = result[0].lower()
+                    except:
+                        pass
                 else:
                     raise Exception('Not support model')
 
@@ -66,6 +69,3 @@ class Ocr:
 
                 writer.writeheader()
                 writer.writerows(data)
-
-            result = self.easyocr_reader.readtext(file_path, detail = 0)
-            file_info.result = result[0].lower()
