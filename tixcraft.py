@@ -22,10 +22,7 @@ def saveData(text: str):
 
         img_data = base64.b64decode(image)
 
-        FOLDER_PATH = f'{ROOT_PATH}/{ans}'
-        os.makedirs(FOLDER_PATH, exist_ok=True)
-
-        with open(f'{FOLDER_PATH}/{ans}_{id}.png', 'wb') as f:
+        with open(f'{ROOT_PATH}/{id}_{ans}.png', 'wb') as f:
             f.write(img_data)
 
 def getQuestData():
