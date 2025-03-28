@@ -2,7 +2,6 @@ import argparse
 import json
 import base64
 import os
-import time
 
 import requests
 
@@ -33,7 +32,7 @@ def getTestData():
     resp = requests.get(CACA_TEST_URL)
     saveData(resp.text)
 
-def main(loop: int):
+def collect(loop: int = 100):
     os.makedirs(ROOT_PATH, exist_ok=True)
 
     for i in range(loop):
@@ -41,12 +40,23 @@ def main(loop: int):
         getQuestData()
         getTestData()
 
-        time.sleep(1)
+def test():
+    print('todo')
 
 if __name__ == '__main__':
-    parser = argparse.ArgumentParser(description='Make multiple requests')
-    parser.add_argument('--loop', type=int, default=1, help='Number of iterations (default: 1)')
+    parser = argparse.ArgumentParser()
+
+    parser.add_argument('--collect', action='store_true', help='Run collecting function')
+    parser.add_argument('--test', action='store_true', help='Run testing function')
 
     args = parser.parse_args()
 
-    main(args.loop)
+    if args.collect and args.test:
+        parser.error("You cannot specify both --collect and --test at the same time.")
+
+    if args.collect:
+        collect()
+    elif args.test:
+        test()
+    else:
+        parser.error("You must specify either --train or --test.")
