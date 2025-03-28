@@ -25,15 +25,19 @@ class Ocr:
         os.makedirs(result_path, exist_ok=True)
 
     def predict(self, predictInfo: Dict[str, PredictInfo], model: str):
+        txt_filename = f'{self.result_path}/{model}.txt'
+        csv_filename = f'{self.result_path}/{model}.csv'
+
         data = []
 
         correct = 0
         cnt = 0
 
         for key in predictInfo:
+            file_info = predictInfo[key]
+
             file_path = f'{self.data_path}/{file_info.file}'
 
-            file_info = predictInfo[key]
             prediect_ans = ''
 
             if file_info.result == '':
@@ -54,11 +58,9 @@ class Ocr:
             status = f'Precision: {correct / cnt:.2f} ({correct} / {cnt})'
             print(status, end='\r')
 
-            txt_filename = f'{self.result_path}/{model}.txt'
             with open(txt_filename, mode='w', newline='', encoding='utf-8') as file:
                 file.write(status)
 
-            csv_filename = f'{self.result_path}/{model}.csv'
             with open(csv_filename, mode='w', newline='', encoding='utf-8') as file:
                 writer = csv.DictWriter(file, fieldnames=row_label)
 
