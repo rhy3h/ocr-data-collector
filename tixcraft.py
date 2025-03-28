@@ -2,7 +2,6 @@ import argparse
 import json
 import base64
 import os
-import csv
 
 from typing import Dict
 
@@ -39,7 +38,7 @@ def getTestData():
     resp = requests.get(CACA_TEST_URL)
     saveData(resp.text)
 
-def collect(loop: int = 100):
+def collect(loop: int = 1000):
     os.makedirs(ROOT_PATH, exist_ok=True)
 
     for i in range(loop):
@@ -85,4 +84,4 @@ if __name__ == '__main__':
     elif args.test:
         test()
     else:
-        parser.error("You must specify either --train or --test.")
+        parser.error("You must specify either --collect or --test.")
