@@ -46,8 +46,8 @@ def main(loop: int):
 
         time.sleep(1)
 
-if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="Make multiple requests")
+if __name__ == '__main__':
+    parser = argparse.ArgumentParser(description='Make multiple requests')
     parser.add_argument('--loop', type=int, default=1, help='Number of iterations (default: 1)')
 
     args = parser.parse_args()
