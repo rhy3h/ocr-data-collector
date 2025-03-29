@@ -4,7 +4,7 @@ from typing import Dict
 
 import easyocr
 
-row_label = ['檔案名稱', '正確答案', '預測答案']
+row_label = ['File', 'Answer', 'Predict']
 
 class PredictInfo:
     def __init__(self, file: str, ans: str, result: str):
