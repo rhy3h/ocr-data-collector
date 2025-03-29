@@ -67,6 +67,7 @@ def test():
     file_map = getMap(files)
 
     ocr.predict(file_map, 'easyocr')
+    ocr.predict(file_map, 'ddddocr')
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()

@@ -3,6 +3,7 @@ import csv
 from typing import Dict
 
 import easyocr
+import ddddocr
 
 row_label = ['File', 'Answer', 'Predict']
 
@@ -21,6 +22,9 @@ class Ocr:
         self.result_path = result_path
 
         self.easyocr_reader = easyocr.Reader(['en'])
+
+        self.ddddocr = ddddocr.DdddOcr(show_ad=False)
+        self.ddddocr.set_ranges(1)
 
         os.makedirs(result_path, exist_ok=True)
 
@@ -47,6 +51,10 @@ class Ocr:
                         prediect_ans = result[0].lower()
                     except:
                         pass
+                elif model == 'ddddocr':
+                    image = open(file_path, 'rb').read()
+                    result = self.ddddocr.classification(image)
+                    prediect_ans = result
                 else:
                     raise Exception('Not support model')
 
