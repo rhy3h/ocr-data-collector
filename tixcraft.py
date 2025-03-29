@@ -58,7 +58,7 @@ def getMap(files: list[str]) -> Dict[str, PredictInfo]:
 
     return data
 
-def test():
+def test(model: str):
     ocr = Ocr(ROOT_PATH, TEST_PATH)
 
     folder_path = Path(ROOT_PATH)
@@ -66,16 +66,19 @@ def test():
 
     file_map = getMap(files)
 
-    ocr.predict(file_map, 'easyocr')
-    ocr.predict(file_map, 'ddddocr')
-    ocr.predict(file_map, 'pytesseract')
-    ocr.predict(file_map, 'paddleocr')
+    if model == 'all':
+        ocr.predict(file_map, 'easyocr')
+        ocr.predict(file_map, 'ddddocr')
+        ocr.predict(file_map, 'pytesseract')
+        ocr.predict(file_map, 'paddleocr')
+    else:
+        ocr.predict(file_map, model)
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
 
     parser.add_argument('--collect', action='store_true', help='Run collecting function')
-    parser.add_argument('--test', action='store_true', help='Run testing function')
+    parser.add_argument('--test', type=str, help='Run testing function')
 
     args = parser.parse_args()
 
@@ -85,6 +88,6 @@ if __name__ == '__main__':
     if args.collect:
         collect()
     elif args.test:
-        test()
+        test(args.test)
     else:
         parser.error("You must specify either --collect or --test.")
