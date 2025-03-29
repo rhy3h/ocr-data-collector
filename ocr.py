@@ -6,6 +6,7 @@ import re
 import easyocr
 import ddddocr
 import pytesseract
+from paddleocr import PaddleOCR
 
 row_label = ['File', 'Answer', 'Predict']
 
@@ -27,6 +28,8 @@ class Ocr:
 
         self.ddddocr = ddddocr.DdddOcr(show_ad=False)
         self.ddddocr.set_ranges(1)
+
+        self.paddleocr = PaddleOCR(lang='en')
 
         os.makedirs(result_path, exist_ok=True)
 
@@ -60,6 +63,12 @@ class Ocr:
                 elif model == 'pytesseract':
                     result = pytesseract.image_to_string(file_path)
                     prediect_ans = re.sub(r'\s+', '', result)
+                elif model == 'paddleocr':
+                    result = self.paddleocr.ocr(file_path, det=False, cls=False)
+                    try:
+                        prediect_ans = result[0][0][0].lower()
+                    except:
+                        pass
                 else:
                     raise Exception('Not support model')
 

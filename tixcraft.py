@@ -69,6 +69,7 @@ def test():
     ocr.predict(file_map, 'easyocr')
     ocr.predict(file_map, 'ddddocr')
     ocr.predict(file_map, 'pytesseract')
+    ocr.predict(file_map, 'paddleocr')
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
