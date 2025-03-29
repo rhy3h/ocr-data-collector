@@ -1,9 +1,11 @@
 import os
 import csv
 from typing import Dict
+import re
 
 import easyocr
 import ddddocr
+import pytesseract
 
 row_label = ['File', 'Answer', 'Predict']
 
@@ -55,6 +57,9 @@ class Ocr:
                     image = open(file_path, 'rb').read()
                     result = self.ddddocr.classification(image)
                     prediect_ans = result
+                elif model == 'pytesseract':
+                    result = pytesseract.image_to_string(file_path)
+                    prediect_ans = re.sub(r'\s+', '', result)
                 else:
                     raise Exception('Not support model')
 
